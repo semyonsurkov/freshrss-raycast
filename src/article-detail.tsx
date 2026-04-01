@@ -20,14 +20,12 @@ const nhm = new NodeHtmlMarkdown({
  * formatting like <b>, <i>, <a> well), then join with paragraph breaks.
  */
 function htmlToMarkdown(html: string): string {
-  // Only strip dangerous/useless elements, let NodeHtmlMarkdown handle the rest
   let clean = html;
   clean = clean.replace(/<script[\s\S]*?<\/script>/gi, "");
   clean = clean.replace(/<style[\s\S]*?<\/style>/gi, "");
   clean = clean.replace(/<noscript[\s\S]*?<\/noscript>/gi, "");
 
   const converted = nhm.translate(clean);
-  // Strip U+FFFC (broken image placeholders)
   return converted.replace(/\uFFFC/g, "").trim();
 }
 
@@ -46,13 +44,11 @@ export function getArticleUrl(article: Article): string {
 function formatMarkdown(article: Article, rawMarkdown: string): string {
   const parts: string[] = [];
 
-  // Title as H1 (cleaned from emojis)
   parts.push(`# ${cleanTitle(article.title) || "Untitled"}`);
 
   parts.push("---");
   parts.push("");
 
-  // Body content
   const body = rawMarkdown.trim();
   parts.push(body || "*No content available*");
 

@@ -210,7 +210,6 @@ export default function ArticleList({
   const showEmptyView = !isLoading && articles.length === 0;
   const showLoadingRow = isLoading && articles.length === 0 && searchText.trim().length > 0;
 
-  // navigationTitle only for nested screens (streamId/streamTitle provided)
   const isNestedScreen = Boolean(streamId || streamTitle);
   const baseNavigationTitle = streamTitle ?? getDefaultNavigationTitle(statusFilter, periodFilter);
   const navigationTitle =
