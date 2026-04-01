@@ -209,6 +209,9 @@ export default function ArticleList({
   const combinedValue = `${statusFilter}:::${periodFilter}`;
   const showEmptyView = !isLoading && articles.length === 0;
   const showLoadingRow = isLoading && articles.length === 0 && searchText.trim().length > 0;
+
+  // navigationTitle only for nested screens (streamId/streamTitle provided)
+  const isNestedScreen = Boolean(streamId || streamTitle);
   const baseNavigationTitle = streamTitle ?? getDefaultNavigationTitle(statusFilter, periodFilter);
   const navigationTitle =
     statusFilter === "unread" && serverUnreadCount !== null
@@ -223,7 +226,7 @@ export default function ArticleList({
       throttle={true}
       filtering={false}
       searchText={searchText}
-      navigationTitle={navigationTitle}
+      navigationTitle={isNestedScreen ? navigationTitle : undefined}
       searchBarAccessory={
         <List.Dropdown
           tooltip="Filter Articles"
