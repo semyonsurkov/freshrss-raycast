@@ -71,7 +71,7 @@ interface ArticleDetailProps {
   article: Article;
   onToggleRead?: (article: Article, markRead: boolean) => void;
   onToggleStar?: (article: Article, star: boolean) => void;
-  extraActions?: React.ReactNode;
+  extraActions?: React.JSX.Element;
 }
 
 export default function ArticleDetail({ article, onToggleRead, onToggleStar, extraActions }: ArticleDetailProps) {
@@ -161,11 +161,11 @@ export default function ArticleDetail({ article, onToggleRead, onToggleStar, ext
             />
             {starred && <Detail.Metadata.TagList.Item text="Starred" color={Color.Yellow} icon={Icon.Star} />}
           </Detail.Metadata.TagList>
-          <Detail.Metadata.Link
-            title="URL"
-            target={url || ""}
-            text={url ? (url.length > 40 ? url.slice(0, 40) + "..." : url) : "—"}
-          />
+          {url ? (
+            <Detail.Metadata.Link title="URL" target={url} text={url.length > 40 ? url.slice(0, 40) + "..." : url} />
+          ) : (
+            <Detail.Metadata.Label title="URL" text="—" />
+          )}
         </Detail.Metadata>
       }
       actions={
